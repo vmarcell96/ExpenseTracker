@@ -3,9 +3,10 @@ import BudgetCard from "./BudgetCard";
 
 type UncategorizedBudgetCardProps = {
     onAddExpenseClick: () => void;
+    onViewExpensesClick: () => void;
 }
 
-export default function UncategorizedBudgetCard({onAddExpenseClick}: UncategorizedBudgetCardProps) {
+export default function UncategorizedBudgetCard({onAddExpenseClick, onViewExpensesClick}: UncategorizedBudgetCardProps) {
 
     const { getBudgetExpenses } = useBudgets();
     const amount = getBudgetExpenses({budgetId: `${UNCATEGORIZED_BUDGET_ID}`})
@@ -13,6 +14,13 @@ export default function UncategorizedBudgetCard({onAddExpenseClick}: Uncategoriz
 
     if (amount === 0) return null;
     return (
-        <BudgetCard amount={amount} name="Uncategorized" gray={true} onAddExpenseClick={onAddExpenseClick}/>
+        <BudgetCard 
+            hideButtons={false} 
+            amount={amount} 
+            name="Uncategorized" 
+            gray={true} 
+            onAddExpenseClick={onAddExpenseClick} 
+            onViewExpensesClick={onViewExpensesClick}
+        />
     )
 }

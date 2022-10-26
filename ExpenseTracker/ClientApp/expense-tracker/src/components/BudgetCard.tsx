@@ -6,11 +6,13 @@ type BudgetCardProps = {
     name: string;
     amount: number;
     max?: number;
-    gray: boolean;
-    onAddExpenseClick: () => void;
+    gray?: boolean;
+    hideButtons: boolean;
+    onAddExpenseClick?: () => void;
+    onViewExpensesClick?: () => void;
 }
 
-export default function BudgetCard({ name, amount, max, gray, onAddExpenseClick }: BudgetCardProps) {
+export default function BudgetCard({ name, amount, max, gray, hideButtons, onAddExpenseClick, onViewExpensesClick }: BudgetCardProps) {
     const classNames = [];
     if (max) {
         if (amount > max) {
@@ -41,7 +43,7 @@ export default function BudgetCard({ name, amount, max, gray, onAddExpenseClick 
                     max={max}
                     now={amount}
                 />}
-                <Stack direction="horizontal" gap={2} className="mt-4">
+                {!hideButtons && <Stack direction="horizontal" gap={2} className="mt-4">
                     <Button
                         variant="outline-primary"
                         className="ms-auto"
@@ -51,10 +53,11 @@ export default function BudgetCard({ name, amount, max, gray, onAddExpenseClick 
                     </Button>
                     <Button
                         variant="outline-secondary"
+                        onClick={onViewExpensesClick}
                     >
                         View Expenses
                     </Button>
-                </Stack>
+                </Stack>}
             </Card.Body>
         </Card>
     )
