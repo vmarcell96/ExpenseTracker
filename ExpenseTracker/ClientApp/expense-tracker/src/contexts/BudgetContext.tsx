@@ -73,7 +73,7 @@ export const BudgetsProvider = ({children}: ChildrenProp) => {
 
     function addExpense({description, amount, budgetId}: AddExpenseParams): void {
         var newExpense: Expense = {id: uuidV4(), budgetId: budgetId, amount: amount, description: description};
-        setExpenses((prevExpenses: any) => {
+        setExpenses((prevExpenses: Expense[]) => {
             return [...prevExpenses, newExpense];
         })
     };
@@ -81,7 +81,7 @@ export const BudgetsProvider = ({children}: ChildrenProp) => {
 
     function addBudget({name, max}: AddBudgetParams): void {
         var newBudget: Budget = {id: uuidV4(), name, max};
-        setBudgets((prevBudgets: any[]) => {
+        setBudgets((prevBudgets: Budget[]) => {
             // If new budget's name already exists we wont add it
             if (prevBudgets.find(budget => budget.name === name)) {
                 return prevBudgets;
@@ -92,15 +92,20 @@ export const BudgetsProvider = ({children}: ChildrenProp) => {
 
 
     function deleteBudget({id}: DeleteFunctionParams): void {
-        //TODO deal with expenses
-        setBudgets((prevBudgets: any[]) => {
+        setExpenses((prevExpenses: Expense[]) => {
+            return prevExpenses.map(expense => {
+                if (expense.budgetId !== id) return expense
+                return {...expense, budgetId: UNCATEGORIZED_BUDGET_ID}
+            })
+        })
+        setBudgets((prevBudgets: Budget[]) => {
             return prevBudgets.filter(budget => budget.id !== id);
         })
     };
 
 
     function deleteExpense({id}: DeleteFunctionParams) {
-        setExpenses((prevExpenses: any[]) => {
+        setExpenses((prevExpenses: Expense[]) => {
             return prevExpenses.filter(expense => expense.id !== id);
         })
     };
