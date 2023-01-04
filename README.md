@@ -16,7 +16,7 @@ This is a React Typescript application where you can manage your expenses. At th
 
 ## Production build
 
-[Deployed to Azure.](https://gray-sea-0cd7d4503.2.azurestaticapps.net/)
+[Deployed to Azure.](https://icy-mud-01a4c9f03.2.azurestaticapps.net/)
 
 ## Run Locally
 ##### Prerequisites
